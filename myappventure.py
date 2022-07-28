@@ -78,7 +78,24 @@ class TestLogin(unittest.TestCase):
     def setUp(self): 
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
 
-    def test_d_failed_login_with_invalid_password(self): 
+    def test_d_success_login(self): 
+            # steps
+            browser = self.browser #buka web browser
+            browser.get("https://myappventure.herokuapp.com/login") # buka situs
+            time.sleep(3)
+            browser.find_element(By.NAME,"email").send_keys("punyanita@gmail.com") # isi email
+            time.sleep(1)
+            browser.find_element(By.NAME,"password").send_keys("punyanita0") # isi password
+            time.sleep(1)
+            browser.find_element(By.XPATH,"/html/body/div[1]/main/div/div/form/div[4]/button").click() # klik tombol masuk
+            time.sleep(5)
+
+            # validasi
+            response_data = browser.find_element(By.XPATH,"/html/body/div[1]/nav/div/div[2]/div").text
+
+            self.assertIn('Hai!', response_data)
+
+    def test_e_failed_login_with_invalid_password(self): 
         # steps
         browser = self.browser #buka web browser
         browser.get("https://myappventure.herokuapp.com/login") # buka situs
@@ -95,7 +112,7 @@ class TestLogin(unittest.TestCase):
 
         self.assertEqual('Kata Sandi Salah', response_data)
 
-    def test_e_failed_login_with_empty_email_and_password(self): 
+    def test_f_failed_login_with_empty_email_and_password(self): 
         # steps
         browser = self.browser #buka web browser
         browser.get("https://myappventure.herokuapp.com/login") # buka situs
